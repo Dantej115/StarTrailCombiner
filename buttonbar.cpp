@@ -28,7 +28,8 @@ void ButtonBar::on_openButton_clicked()
         return;
     }
     emit Logged("Load successfuly");
-    emit listLoaded(tempfileList);
+    globalContainer::getInstance()->fillFileList(tempfileList);
+
 }
 QFileInfoList ButtonBar::loadFileList(const QString& selectedFolder)
 {

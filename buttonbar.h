@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QString>
 #include <QFileInfo>
+#include <globalcontainer.h>
 
 namespace Ui {
 class ButtonBar;

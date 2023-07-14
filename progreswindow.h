@@ -17,6 +17,9 @@ public:
     explicit ProgresWindow(QWidget *parent = nullptr);
     ~ProgresWindow();
 
+public slots:
+    void progressChanged(int totalVal, int tempVal);
+
 private:
     Ui::ProgresWindow *ui;
 };

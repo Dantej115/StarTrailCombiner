@@ -31,7 +31,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QProgressBar" name="progressBar">
+     <widget class="QProgressBar" name="currentProgressBar">
       <property name="value">
        <number>24</number>
       </property>
@@ -45,7 +45,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QProgressBar" name="progressBar_2">
+     <widget class="QProgressBar" name="totalProgressBar">
       <property name="value">
        <number>24</number>
       </property>

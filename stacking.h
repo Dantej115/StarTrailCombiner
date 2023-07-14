@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <globalcontainer.h>
 
 
 class Stacking : public QObject
@@ -12,12 +13,15 @@ class Stacking : public QObject
 public:
     explicit Stacking(QObject *parent = nullptr);
 
+public slots:
+    void processStarted();
+
 signals:
-    void progressChanged();
+    void progressChanged(int totalVal, int tempVal);
 
 private:
-
     QVBoxLayout* layout;
+
 
 };
 

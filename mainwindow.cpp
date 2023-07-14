@@ -8,14 +8,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ProgresWindow* progresDialog = new ProgresWindow(this);
-    progresDialog->show();
+    Stacking* stacker = new Stacking(this);
+    globalContainer* contener = globalContainer::getInstance();
 
-
+    // Signals for messageBox
     QObject::connect(this, &MainWindow::Logged, ui->msgBoard, &MessageBoard::printLog);
     QObject::connect(ui->b_widget, &ButtonBar::Logged, ui->msgBoard, &MessageBoard::printLog);
-    QObject::connect(ui->b_widget, &ButtonBar::listLoaded, this, &MainWindow::collectList);
-    QObject::connect(this, &MainWindow::collectList, this, &MainWindow::loadWidget);
-    QObject::connect(ui->b_widget, &ButtonBar::combineClicked, this, &MainWindow::progresBarShown);
+
+    // Signal file list -> loadWidget
+    QObject::connect(contener,&globalContainer::loadWidget, ui->listWidget, &WidgetList::loadWidget);
+    // Signal button combined -> start stacking
+    QObject::connect(ui->b_widget, &ButtonBar::combineClicked, stacker, &Stacking::processStarted);
 
     //connect(stacker, &Stacker::progressed, progressDialog, &ProgressDialog::setProgress);
 
@@ -28,41 +31,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
-{
-    QVariant varImg = item->data(Qt::UserRole);
-    QPixmap img = varImg.value<QPixmap>();
-    if (!img.isNull()) {
-        QGraphicsScene* Scene = new QGraphicsScene(this);
-        Scene->addPixmap(img);
-        ui->graphicsView->setScene(Scene);
-        ui->graphicsView->fitInView(Scene->sceneRect(), Qt::KeepAspectRatio);
-    }
-}
-
-void MainWindow::loadWidget(QFileInfoList fileList)
-{
-    ui->listWidget->clear();
-    for(const auto& file : fileList){
-        QString filePath = file.absoluteFilePath();
-        QFileInfo fileInfo(filePath);
-        QListWidgetItem* item = new QListWidgetItem(fileInfo.fileName());
-        ui->listWidget->addItem(item);
-    }
-}
-
-void MainWindow::progresBarShown()
-{
-
-}
-
-void MainWindow::collectList(QFileInfoList fileList)
-{
-    this->fileList = fileList;
-    emit loadWidget(fileList);
-}
-
-void MainWindow::generateStarTrail()
-{
-
-}
+//void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+//{
+//    QVariant varImg = item->data(Qt::UserRole);
+//    QPixmap img = varImg.value<QPixmap>();
+//    if (!img.isNull()) {
+//        QGraphicsScene* Scene = new QGraphicsScene(this);
+//        Scene->addPixmap(img);
+//        ui->graphicsView->setScene(Scene);
+//        ui->graphicsView->fitInView(Scene->sceneRect(), Qt::KeepAspectRatio);
+//    }
+//}

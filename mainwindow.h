@@ -18,6 +18,7 @@
 #include "messageboard.h"
 #include "stacking.h"
 #include "progreswindow.h"
+#include "widgetlist.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -31,16 +32,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
-    void loadWidget(QFileInfoList fileList);
-    void progresBarShown();
-
 signals:
     void Logged(QString str);
 
 private:
-    void collectList(QFileInfoList fileList);
     void generateStarTrail();
 
 private:
