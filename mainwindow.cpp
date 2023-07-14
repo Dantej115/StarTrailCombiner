@@ -15,11 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(this, &MainWindow::Logged, ui->msgBoard, &MessageBoard::printLog);
     QObject::connect(ui->b_widget, &ButtonBar::Logged, ui->msgBoard, &MessageBoard::printLog);
 
-    // Signal file list -> loadWidget
+    // Signal file list loaded -> load Widget
     QObject::connect(contener,&globalContainer::loadWidget, ui->listWidget, &WidgetList::loadWidget);
-    // Signal button combined -> start stacking
+    // Signal button combined clicked -> start stacking
     QObject::connect(ui->b_widget, &ButtonBar::combineClicked, stacker, &Stacking::processStarted);
-
+    // Signal button combined clicked -> show window
+    QObject::connect(ui->b_widget, &ButtonBar::combineClicked, progresDialog, &ProgresWindow::show);
     //connect(stacker, &Stacker::progressed, progressDialog, &ProgressDialog::setProgress);
 
     emit Logged("Welcome adventurer in StarTrails Composer");

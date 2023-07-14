@@ -6,5 +6,7 @@ Stacking::Stacking(QObject *parent) : QObject(parent)
 }
 void Stacking::processStarted()
 {
-    globalContainer::getInstance()->getFileList();
+    QFileInfoList* fileList = globalContainer::getInstance()->getFileList();
+
+
 }

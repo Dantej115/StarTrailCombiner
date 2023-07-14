@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <QScopedPointer>
 #include <globalcontainer.h>
 
 

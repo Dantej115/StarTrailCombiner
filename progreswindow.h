@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <QObject>
 
 namespace Ui {
 class ProgresWindow;
@@ -19,6 +20,9 @@ public:
 
 public slots:
     void progressChanged(int totalVal, int tempVal);
+
+private slots:
+    void on_cancelButton_clicked();
 
 private:
     Ui::ProgresWindow *ui;
