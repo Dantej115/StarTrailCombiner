@@ -47,3 +47,8 @@ void ButtonBar::on_combineButton_clicked()
 {
     emit combineClicked();
 }
+
+void ButtonBar::on_saveFileButton_clicked()
+{
+
+}

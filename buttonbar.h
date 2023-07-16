@@ -28,6 +28,8 @@ private slots:
     void on_openButton_clicked();
     void on_combineButton_clicked();
 
+    void on_saveFileButton_clicked();
+
 private:
     Ui::ButtonBar *ui;
     QFileInfoList loadFileList(const QString& selectedFolder);
