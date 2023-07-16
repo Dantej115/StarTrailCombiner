@@ -2,9 +2,9 @@
 
 Stacking::Stacking(QObject *parent) : QObject(parent)
 {
-
+    m_isInterrupted = false;
 }
-void Stacking::processStarted()
+void Stacking::processStart()
 {
     QFileInfoList fileList = *globalContainer::getInstance()->getFileList();
     if(fileList.empty()){
@@ -17,8 +17,9 @@ void Stacking::processStarted()
 
     for( ; it != fileList.end(); it++){
         // progress info start with second image so progress is calculated with one less img
-        int totalProg = std::distance(fileList.begin(), it) - 1;
-        emit totalProgressChanged(totalProg / (fileList.size() - 1));
+        int totalProg = std::distance(fileList.begin(), it);
+        int test = totalProg * 100 / (fileList.size() - 1);
+        emit totalProgressChanged(test);
 
         // load img
         QImage currentImg(it->absoluteFilePath());
@@ -26,12 +27,23 @@ void Stacking::processStarted()
         // check if image has the same sizes
         if(currentImg.size() == tempImage.size()){
             tempImage = compareImages(tempImage, currentImg);
+            if(m_isInterrupted){
+                m_isInterrupted = false;
+                break;
+            }
         }
     }
-
+    if(tempImage.isNull()){
+        return;
+    }
     globalContainer::getInstance()->setImage(tempImage);
     emit imageCompleted();
 
+}
+
+void Stacking::processCancel()
+{
+    m_isInterrupted = true;
 }
 
 QImage Stacking::compareImages(const QImage &prevImg, const QImage &currImg)
@@ -41,9 +53,9 @@ QImage Stacking::compareImages(const QImage &prevImg, const QImage &currImg)
     QImage tempImg(prevImg.size(), QImage::Format_RGB32);
     for(int y = 0; y < currImg.height(); ++y){
         for(int x = 0; x < currImg.width(); ++x){
-            // emit progress value in precentage value of total value of image size
-            emit currentProgressChanged(x * y / progressSize * 100);
-
+            if(m_isInterrupted){
+                return QImage("canceled", nullptr);
+            }
             // asign pixels of img
             QRgb pixel1 = prevImg.pixel(x, y);
             QRgb pixel2 = currImg.pixel(x, y);

@@ -15,7 +15,8 @@ public:
     explicit Stacking(QObject *parent = nullptr);
 
 public slots:
-    void processStarted();
+    void processStart();
+    void processCancel();
 
 signals:
     void currentProgressChanged(int Value);
@@ -24,11 +25,11 @@ signals:
     void progressShow();
 
 private:
-    QImage compareImages(const QImage& img1, const QImage& img2);
+    QImage compareImages(const QImage &prevImg, const QImage &currImg);
 
 private:
     QVBoxLayout* layout;
-
+    bool m_isInterrupted;
 
 };
 
