@@ -35,8 +35,9 @@ public:
 signals:
     void Logged(QString str);
 
-private:
-    void generateStarTrail();
+public slots:
+    void imageCompleted();
+
 
 private:
     Ui::MainWindow *ui;
