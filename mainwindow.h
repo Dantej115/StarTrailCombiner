@@ -15,6 +15,7 @@
 #include <QFileInfo>
 #include <QPixmap>
 #include <QDebug>
+#include <QThread>
 #include "messageboard.h"
 #include "stacking.h"
 #include "progreswindow.h"
@@ -36,7 +37,7 @@ signals:
     void Logged(QString str);
 
 public slots:
-    void imageCompleted();
+    void imageComplete();
 
 
 private:
