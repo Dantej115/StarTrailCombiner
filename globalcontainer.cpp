@@ -11,6 +11,16 @@ QFileInfoList* globalContainer::getFileList()
     return &m_fileList;
 }
 
+void globalContainer::setImage(QImage img)
+{
+    starTrail = img;
+}
+
+QImage globalContainer::getImage()
+{
+    return starTrail;
+}
+
 void globalContainer::fillFileList(QFileInfoList fileList)
 {
     m_fileList = std::move(fileList);
