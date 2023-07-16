@@ -18,7 +18,13 @@ public slots:
     void processStarted();
 
 signals:
-    void progressChanged(int totalVal, int tempVal);
+    void currentProgressChanged(int Value);
+    void totalProgressChanged(int Value);
+    void imageCompleted();
+    void progressShow();
+
+private:
+    QImage compareImages(const QImage& img1, const QImage& img2);
 
 private:
     QVBoxLayout* layout;
