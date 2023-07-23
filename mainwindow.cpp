@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Signal button combined clicked -> show window
     QObject::connect(stacker, &Stacking::progressShow, progresDialog, &ProgresWindow::show);
     // Signal stacker give info to progress dialog about total progress
-    QObject::connect(stacker, &Stacking::totalProgressChanged, progresDialog, &ProgresWindow::totalProgressChange,Qt::QueuedConnection);
+    QObject::connect(stacker, &Stacking::totalProgressChanged, progresDialog, &ProgresWindow::totalProgressChange,Qt::DirectConnection);
     // Signal stacker send info about completed image
     QObject::connect(stacker, &Stacking::imageCompleted, this, &MainWindow::imageComplete);
     // Signal Progress dialog that cancel has been clicked. Stacking algorithm is aborted
