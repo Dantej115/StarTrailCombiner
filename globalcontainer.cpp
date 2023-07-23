@@ -16,7 +16,7 @@ void globalContainer::setImage(QImage img)
     starTrail = img;
 }
 
-QImage globalContainer::getImage()
+QImage globalContainer::getImage() const
 {
     return starTrail;
 }

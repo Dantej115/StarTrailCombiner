@@ -13,7 +13,7 @@ public:
     static globalContainer *getInstance();
     QFileInfoList* getFileList();
     void setImage(QImage img);
-    QImage getImage();
+    QImage getImage() const;
     void fillFileList(QFileInfoList fileList);
 
 private:
