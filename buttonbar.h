@@ -32,7 +32,7 @@ private slots:
 
 private:
     Ui::ButtonBar *ui;
-    QFileInfoList loadFileList(const QString& selectedFolder);
+    QFileInfoList loadFileList();
 };
 
 #endif // BUTTONBAR_H

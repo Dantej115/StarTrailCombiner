@@ -15,32 +15,31 @@ ButtonBar::~ButtonBar()
 
 void ButtonBar::on_openButton_clicked()
 {
-    QString selectedFolder  = QFileDialog::getExistingDirectory(nullptr, "Select Folder");
+    QFileInfoList fileList = loadFileList();
 
-    if (selectedFolder.isEmpty()) {
-        emit Logged("Error: folder is empty");
-        return;
-    }
-    QFileInfoList tempfileList = loadFileList(selectedFolder);
-
-    if(tempfileList.empty()){
+    if(fileList.empty()){
         emit Logged("Error: Folder has no images");
         return;
     }
     emit Logged("Load successfuly");
-    globalContainer::getInstance()->fillFileList(tempfileList);
+    globalContainer::getInstance()->fillFileList(fileList);
 
 }
-QFileInfoList ButtonBar::loadFileList(const QString& selectedFolder)
+QFileInfoList ButtonBar::loadFileList()
 {
-    QDir folderDir(selectedFolder);
+    QStringList  filePathList  = QFileDialog::getOpenFileNames(
+                nullptr,
+                "Select JPG files",
+                QDir::homePath(),
+                "Images (*.jpeg *.jpg *.JPG)"
+                );
 
-    folderDir.setFilter(QDir::Files | QDir::NoSymLinks);
-    folderDir.setNameFilters(QStringList() << "*.jpg" << "*.JPG");
-
-    QFileInfoList tempfileList = folderDir.entryInfoList();
-
-    return tempfileList;
+    QFileInfoList fileList;
+    for(auto fileName : filePathList){
+        QFileInfo file(fileName);
+        fileList.append(file);
+    }
+    return fileList;
 }
 
 void ButtonBar::on_combineButton_clicked()
