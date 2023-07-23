@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QString>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <globalcontainer.h>
 
 namespace Ui {
@@ -33,6 +34,7 @@ private slots:
 private:
     Ui::ButtonBar *ui;
     QFileInfoList loadFileList();
+    bool fileSave();
 };
 
 #endif // BUTTONBAR_H

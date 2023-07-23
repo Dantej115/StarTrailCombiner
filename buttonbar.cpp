@@ -42,6 +42,51 @@ QFileInfoList ButtonBar::loadFileList()
     return fileList;
 }
 
+bool ButtonBar::fileSave()
+{
+    QImage imageToSave = globalContainer::getInstance()->getImage();
+    if(imageToSave.isNull()){
+        emit Logged("Error: No image to save");
+        return false;
+    }
+    QString filePath = QFileDialog::getSaveFileName(
+                this,
+                tr("Save Image"),
+                QDir::homePath(),
+                tr("Images (*.png *.xpm *.jpg)")
+                );
+
+    if (filePath.isNull() || filePath.isEmpty()) {
+        emit Logged("Error: Invalid filepath");
+        return false;
+    }
+        ;
+    if (!filePath.toLower().endsWith(".jpg", Qt::CaseInsensitive)) {
+        filePath += ".jpg";
+    }
+
+    return imageToSave.save(filePath);
+}
+//bool ButtonBar::fileSave()
+//{
+//    QImage imageToSave = globalContainer::getInstance()->getImage();
+//    if(imageToSave.isNull()){
+//        throw
+//    }
+//    QString filePath = QFileDialog::getSaveFileName(
+//                this,
+//                "Save Image",
+//                QDir::homePath(),
+//                "Images (*.jpg)"
+//                );
+
+//    if (filePath.isNull() || filePath.isEmpty()) {
+//        emit Logged("Error: Invalid filepath");
+//        return false;
+//    }
+//    return imageToSave.save(filePath);
+//}
+
 void ButtonBar::on_combineButton_clicked()
 {
     emit combineClicked();
@@ -49,5 +94,11 @@ void ButtonBar::on_combineButton_clicked()
 
 void ButtonBar::on_saveFileButton_clicked()
 {
+    bool fileSaved = fileSave();
+    if (!fileSaved) {
+        emit Logged("Error: Failed to save the image");
+        return;
+    }
+    emit Logged("Image saved successfuly");
 
 }
