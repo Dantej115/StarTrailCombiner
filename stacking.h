@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QDialog>
 #include <QVBoxLayout>
+#include <QScopedPointer>
+#include <globalcontainer.h>
 
 
 class Stacking : public QObject
@@ -12,12 +14,22 @@ class Stacking : public QObject
 public:
     explicit Stacking(QObject *parent = nullptr);
 
+public slots:
+    void processStart();
+    void processCancel();
+
 signals:
-    void progressChanged();
+    void currentProgressChanged(int Value);
+    void totalProgressChanged(int Value);
+    void imageCompleted();
+    void progressShow();
 
 private:
+    QImage compareImages(const QImage &prevImg, const QImage &currImg);
 
+private:
     QVBoxLayout* layout;
+    bool m_isInterrupted;
 
 };
 

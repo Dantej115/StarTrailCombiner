@@ -15,34 +15,90 @@ ButtonBar::~ButtonBar()
 
 void ButtonBar::on_openButton_clicked()
 {
-    QString selectedFolder  = QFileDialog::getExistingDirectory(nullptr, "Select Folder");
+    QFileInfoList fileList = loadFileList();
 
-    if (selectedFolder.isEmpty()) {
-        emit Logged("Error: folder is empty");
-        return;
-    }
-    QFileInfoList tempfileList = loadFileList(selectedFolder);
-
-    if(tempfileList.empty()){
+    if(fileList.empty()){
         emit Logged("Error: Folder has no images");
         return;
     }
     emit Logged("Load successfuly");
-    emit listLoaded(tempfileList);
+    globalContainer::getInstance()->fillFileList(fileList);
+
 }
-QFileInfoList ButtonBar::loadFileList(const QString& selectedFolder)
+QFileInfoList ButtonBar::loadFileList()
 {
-    QDir folderDir(selectedFolder);
+    QStringList  filePathList  = QFileDialog::getOpenFileNames(
+                nullptr,
+                "Select JPG files",
+                QDir::homePath(),
+                "Images (*.jpeg *.jpg *.JPG)"
+                );
 
-    folderDir.setFilter(QDir::Files | QDir::NoSymLinks);
-    folderDir.setNameFilters(QStringList() << "*.jpg" << "*.JPG");
-
-    QFileInfoList tempfileList = folderDir.entryInfoList();
-
-    return tempfileList;
+    QFileInfoList fileList;
+    for(auto fileName : filePathList){
+        QFileInfo file(fileName);
+        fileList.append(file);
+    }
+    return fileList;
 }
+
+bool ButtonBar::fileSave()
+{
+    QImage imageToSave = globalContainer::getInstance()->getImage();
+    if(imageToSave.isNull()){
+        emit Logged("Error: No image to save");
+        return false;
+    }
+    QString filePath = QFileDialog::getSaveFileName(
+                this,
+                tr("Save Image"),
+                QDir::homePath(),
+                tr("Images (*.png *.xpm *.jpg)")
+                );
+
+    if (filePath.isNull() || filePath.isEmpty()) {
+        emit Logged("Error: Invalid filepath");
+        return false;
+    }
+        ;
+    if (!filePath.toLower().endsWith(".jpg", Qt::CaseInsensitive)) {
+        filePath += ".jpg";
+    }
+
+    return imageToSave.save(filePath);
+}
+//bool ButtonBar::fileSave()
+//{
+//    QImage imageToSave = globalContainer::getInstance()->getImage();
+//    if(imageToSave.isNull()){
+//        throw
+//    }
+//    QString filePath = QFileDialog::getSaveFileName(
+//                this,
+//                "Save Image",
+//                QDir::homePath(),
+//                "Images (*.jpg)"
+//                );
+
+//    if (filePath.isNull() || filePath.isEmpty()) {
+//        emit Logged("Error: Invalid filepath");
+//        return false;
+//    }
+//    return imageToSave.save(filePath);
+//}
 
 void ButtonBar::on_combineButton_clicked()
 {
     emit combineClicked();
+}
+
+void ButtonBar::on_saveFileButton_clicked()
+{
+    bool fileSaved = fileSave();
+    if (!fileSaved) {
+        emit Logged("Error: Failed to save the image");
+        return;
+    }
+    emit Logged("Image saved successfuly");
+
 }

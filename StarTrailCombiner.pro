@@ -17,18 +17,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     buttonbar.cpp \
+    globalcontainer.cpp \
     main.cpp \
     mainwindow.cpp \
     messageboard.cpp \
     progreswindow.cpp \
-    stacking.cpp
+    stacking.cpp \
+    widgetlist.cpp
 
 HEADERS += \
     buttonbar.h \
+    globalcontainer.h \
     mainwindow.h \
     messageboard.h \
     progreswindow.h \
-    stacking.h
+    stacking.h \
+    widgetlist.h
 
 FORMS += \
     buttonbar.ui \

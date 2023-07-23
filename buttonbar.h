@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include <QString>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <globalcontainer.h>
 
 namespace Ui {
 class ButtonBar;
@@ -27,9 +29,12 @@ private slots:
     void on_openButton_clicked();
     void on_combineButton_clicked();
 
+    void on_saveFileButton_clicked();
+
 private:
     Ui::ButtonBar *ui;
-    QFileInfoList loadFileList(const QString& selectedFolder);
+    QFileInfoList loadFileList();
+    bool fileSave();
 };
 
 #endif // BUTTONBAR_H
