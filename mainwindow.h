@@ -38,11 +38,17 @@ signals:
 
 public slots:
     void imageComplete();
+    void startStacking();
 
+private:
+    void connectObjects();
 
 private:
     Ui::MainWindow *ui;
     QFileInfoList fileList;
+    Stacking* stacker;
+    QThread* stackingThread;
+    ProgresWindow* progresDialog;
 
 
 };
