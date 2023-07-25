@@ -24,7 +24,7 @@ void Stacking::processStart()
         // load img
         QImage currentImg(it->absoluteFilePath());
 
-        // check if image has the same sizes
+        // check if images has the same sizes
         if(currentImg.size() == tempImage.size()){
             tempImage = compareImages(tempImage, currentImg);
             if(m_isInterrupted){
