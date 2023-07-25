@@ -21,6 +21,7 @@ public:
 
 public slots:
     void totalProgressChange(int Value);
+
 signals:
     void canceled();
 

@@ -20,7 +20,7 @@ ProgresWindow::~ProgresWindow()
 
 void ProgresWindow::totalProgressChange(int Value)
 {
-       ui->totalProgressBar->setValue(Value);
+    ui->totalProgressBar->setValue(Value);
 }
 
 void ProgresWindow::on_cancelButton_clicked()
