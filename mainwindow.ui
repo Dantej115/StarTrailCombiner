@@ -42,7 +42,7 @@
      </sizepolicy>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="ViewScene" name="graphicsView">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -96,6 +96,11 @@
    <class>WidgetList</class>
    <extends>QListWidget</extends>
    <header>widgetlist.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ViewScene</class>
+   <extends>QGraphicsView</extends>
+   <header>viewscene.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

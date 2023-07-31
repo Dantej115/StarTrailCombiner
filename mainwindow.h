@@ -35,6 +35,7 @@ public:
 
 signals:
     void Logged(QString str);
+    void showImageRequested();
 
 public slots:
     void imageComplete();
@@ -49,6 +50,7 @@ private:
     Stacking* stacker;
     QThread* stackingThread;
     ProgresWindow* progresDialog;
+    globalContainer* contener;
 
 
 };

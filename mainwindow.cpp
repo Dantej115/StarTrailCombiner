@@ -34,13 +34,7 @@ void MainWindow::startStacking()
 
 void MainWindow::imageComplete()
 {
-    QPixmap img = QPixmap::fromImage(globalContainer::getInstance()->getImage());
-    if (!img.isNull()) {
-        QGraphicsScene* Scene = new QGraphicsScene(this);
-        Scene->addPixmap(img);
-        ui->graphicsView->setScene(Scene);
-        ui->graphicsView->fitInView(Scene->sceneRect(), Qt::KeepAspectRatio);
-    }
+    emit showImageRequested();
     stackingThread->exit();
     stackingThread->wait();
 }
@@ -51,21 +45,23 @@ void MainWindow::connectObjects()
     QObject::connect(this, &MainWindow::Logged, ui->msgBoard, &MessageBoard::printLog);
     QObject::connect(ui->b_widget, &ButtonBar::Logged, ui->msgBoard, &MessageBoard::printLog);
 
-    // Signal file list loaded -> load Widget
-    QObject::connect(contener,&globalContainer::loadWidget, ui->listWidget, &WidgetList::loadWidget);
-    // Signal button combined clicked -> start thread
+    // File list loaded -> load Widget
+    QObject::connect(contener, &globalContainer::loadWidget, ui->listWidget, &WidgetList::loadWidget);
+    // Button combined clicked -> start thread
     QObject::connect(ui->b_widget, &ButtonBar::combineClicked, this, &MainWindow::startStacking);
-    // Signal button combined clicked -> start stacking
+    // Button combined clicked -> start stacking
     QObject::connect(ui->b_widget, &ButtonBar::combineClicked, stacker, &Stacking::processStart);
-    // Signal button combined clicked -> show window
+    // Button combined clicked -> show window
     QObject::connect(stacker, &Stacking::progressShow, progresDialog, &ProgresWindow::show);
-    // Signal stacker give info to progress dialog about total progress
+    // Stacker give info to progress dialog about total progress
     QObject::connect(stacker, &Stacking::totalProgressChanged, progresDialog, &ProgresWindow::totalProgressChange,Qt::DirectConnection);
-    // Signal stacker send info about completed image
+    // Stacker send info about completed image
     QObject::connect(stacker, &Stacking::imageCompleted, this, &MainWindow::imageComplete);
-    // Signal stacker send info about completed image
+    // Stacker send info about completed image
     QObject::connect(stacker, &Stacking::imageCompleted, progresDialog, &ProgresWindow::close);
-    // Signal Progress dialog that cancel has been clicked. Stacking algorithm is aborted
+    // MainWindow send info about show result image
+    QObject::connect(this, &MainWindow::showImageRequested, ui->graphicsView, &ViewScene::viewImage);
+    // Progress dialog cancel has been clicked. Stacking algorithm is aborted
     QObject::connect(progresDialog, &ProgresWindow::canceled, stacker, &Stacking::processCancel, Qt::DirectConnection);
 }
 
