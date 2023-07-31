@@ -23,6 +23,7 @@ SOURCES += \
     messageboard.cpp \
     progreswindow.cpp \
     stacking.cpp \
+    viewscene.cpp \
     widgetlist.cpp
 
 HEADERS += \
@@ -32,14 +33,10 @@ HEADERS += \
     messageboard.h \
     progreswindow.h \
     stacking.h \
+    viewscene.h \
     widgetlist.h
 
 FORMS += \
     buttonbar.ui \
     mainwindow.ui \
     progreswindow.ui
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
