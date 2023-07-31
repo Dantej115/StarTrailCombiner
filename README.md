@@ -1,18 +1,23 @@
 # StarTrailCombiner
-A little app to combine all of images to just one beautiful star trail
+A little app to combine all of images to just one beautiful Star Trail. 
+I tried to keep it simple as possible. 
 
-It was develop in QT in QtCreator IDE. 
+It was develop in QT with QtCreator IDE, mostly for learning Qt framework. 
+Algorithm used for combining image is maxiumum. 
 
-It is simple load and execute app. 
+# Usage
 
-## Loaded an executed with combine button
+### Loade images
+In the app, we simply click open and load the photos.
 
-<img width="495" alt="StarTrails" src="https://github.com/Dantej115/StarTrailCombiner/assets/106375728/571a1ab3-53d7-466b-a91e-eccccead9f09">
+![output](https://github.com/Dantej115/StarTrailCombiner/assets/106375728/dabc4d5d-e00c-4691-b78e-e6fdc0edaca1)
 
 ----
 
-## Final image combined with my friend's photos
+### One button to bring them all and in the final image bind them
+Final image combined with my friend's photos
 
-<img width="497" alt="StarTrails2" src="https://github.com/Dantej115/StarTrailCombiner/assets/106375728/2061cdeb-064f-4c01-ac26-cd10330003d3">
+![output2](https://github.com/Dantej115/StarTrailCombiner/assets/106375728/b6adce49-7e89-412d-91ec-80075694e486)
+
 
 ----
