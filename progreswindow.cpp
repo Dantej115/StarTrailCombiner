@@ -23,6 +23,11 @@ void ProgresWindow::totalProgressChange(int Value)
     ui->totalProgressBar->setValue(Value);
 }
 
+void ProgresWindow::closeEvent(QCloseEvent *)
+{
+    ui->totalProgressBar->setValue(0);
+}
+
 void ProgresWindow::on_cancelButton_clicked()
 {
     ui->totalProgressBar->setValue(0);

@@ -21,6 +21,7 @@ public:
 
 public slots:
     void totalProgressChange(int Value);
+    void closeEvent(QCloseEvent *) override;
 
 signals:
     void canceled();
